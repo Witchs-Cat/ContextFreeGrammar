@@ -1,7 +1,6 @@
-﻿namespace ContextFreeGrammar.СSharp
+﻿namespace ContextFreeGrammar.СSharp;
+
+internal interface INonteminal
 {
-    internal interface INonteminal
-    {
-        bool TryParse(out IEnumerable<Node> nodes, string input);
-    }
+    bool TryParse(out IEnumerable<Node> nodes, string input);
 }

@@ -5,28 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContextFreeGrammar.СSharp.Nonterminals
+namespace ContextFreeGrammar.СSharp.Nonterminals;
+
+internal class SNonterminal : INonteminal
 {
-    internal class SNonterminal : INonteminal
+    public bool TryParse(out IEnumerable<Node> nods, string input)
     {
-        public bool TryParse(out IEnumerable<Node> nods, string input)
+        input = input.Replace(" ", "");
+
+        if (String.IsNullOrEmpty(input))
         {
-            input = input.Replace(" ", "");
-
-            if (String.IsNullOrEmpty(input))
-            {
-                nods = Array.Empty<Node>();
-                return false;
-            }
-
-            nods = new Node[] { new Node(new ENonterminal(), input) };
-
-            return true;
+            nods = Array.Empty<Node>();
+            return false;
         }
 
-        public override string ToString()
-        {
-            return "<S>";
-        }
+        nods = new Node[] { new Node(new ENonterminal(), input) };
+
+        return true;
+    }
+
+    public override string ToString()
+    {
+        return "<S>";
     }
 }
+

@@ -4,30 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContextFreeGrammar.СSharp.Nonterminals
+namespace ContextFreeGrammar.СSharp.Nonterminals;
+internal class TNonterminal : INonteminal
 {
-    internal class TNonterminal : INonteminal
+    public bool TryParse(out IEnumerable<Node> nods, string input)
     {
-        public bool TryParse(out IEnumerable<Node> nods, string input)
+        int multIndex = input.LastIndexOf("*");
+        if (multIndex == -1)
         {
-            int multIndex = input.LastIndexOf("*");
-            if (multIndex == -1)
-            {
-                nods = new Node[]{new Node(new PNonterminal(), input),};
-                return true;
-            }
-
-            nods = new Node[]
-            {
-                new Node(new TNonterminal(), input.Substring(0, multIndex)),
-                new Node(new PNonterminal(), input.Substring(multIndex + 1)),
-            };
+            nods = new Node[]{new Node(new PNonterminal(), input),};
             return true;
         }
 
-        public override string ToString()
+        nods = new Node[]
         {
-            return "<T>";
-        }
+            new Node(new TNonterminal(), input.Substring(0, multIndex)),
+            new Node(new PNonterminal(), input.Substring(multIndex + 1)),
+        };
+        return true;
+    }
+
+    public override string ToString()
+    {
+        return "<T>";
     }
 }
